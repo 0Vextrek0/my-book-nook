@@ -36,7 +36,7 @@ export default function LandingPage() {
                 </Button>
               </Link>
               <Link to="/register">
-                <Button size="lg" variant="outline" className="gap-2 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 font-display font-semibold">
+                <Button size="lg" className="gap-2 bg-foreground text-background hover:bg-foreground/80 font-display font-semibold">
                   Зареєструватися
                   <ArrowRight className="h-4 w-4" />
                 </Button>
