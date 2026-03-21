@@ -6,16 +6,16 @@ const COVER_COLORS = [
 ];
 
 export const mockBooks: Book[] = [
-  { id: '1', isbn: '978-966-14-1234-5', inventoryNumber: 'INV-001', title: 'Тіні забутих предків', author: 'Михайло Коцюбинський', genre: 'Класика', year: 1911, status: 'available', coverColor: COVER_COLORS[0] },
-  { id: '2', isbn: '978-966-14-2345-6', inventoryNumber: 'INV-002', title: 'Кайдашева сім\'я', author: 'Іван Нечуй-Левицький', genre: 'Класика', year: 1879, status: 'reserved', coverColor: COVER_COLORS[1] },
-  { id: '3', isbn: '978-966-14-3456-7', inventoryNumber: 'INV-003', title: 'Місто', author: 'Валер\'ян Підмогильний', genre: 'Роман', year: 1928, status: 'available', coverColor: COVER_COLORS[2] },
-  { id: '4', isbn: '978-966-14-4567-8', inventoryNumber: 'INV-004', title: 'Лісова пісня', author: 'Леся Українка', genre: 'Драма', year: 1911, status: 'available', coverColor: COVER_COLORS[3] },
-  { id: '5', isbn: '978-966-14-5678-9', inventoryNumber: 'INV-005', title: 'Захар Беркут', author: 'Іван Франко', genre: 'Історичний', year: 1883, status: 'reserved', coverColor: COVER_COLORS[4] },
-  { id: '6', isbn: '978-966-14-6789-0', inventoryNumber: 'INV-006', title: 'Маруся Чурай', author: 'Ліна Костенко', genre: 'Поезія', year: 1979, status: 'available', coverColor: COVER_COLORS[5] },
-  { id: '7', isbn: '978-966-14-7890-1', inventoryNumber: 'INV-007', title: 'Енеїда', author: 'Іван Котляревський', genre: 'Поема', year: 1798, status: 'available', coverColor: COVER_COLORS[6] },
-  { id: '8', isbn: '978-966-14-8901-2', inventoryNumber: 'INV-008', title: 'Чорна рада', author: 'Пантелеймон Куліш', genre: 'Історичний', year: 1857, status: 'written-off', coverColor: COVER_COLORS[7] },
-  { id: '9', isbn: '978-966-14-9012-3', inventoryNumber: 'INV-009', title: 'Кобзар', author: 'Тарас Шевченко', genre: 'Поезія', year: 1840, status: 'available', coverColor: COVER_COLORS[0] },
-  { id: '10', isbn: '978-966-14-0123-4', inventoryNumber: 'INV-010', title: 'Тигролови', author: 'Іван Багряний', genre: 'Пригодницький', year: 1944, status: 'available', coverColor: COVER_COLORS[1] },
+  { id: '1', isbn: '978-966-14-1234-5', inventoryNumber: 'INV-001', title: 'Тіні забутих предків', author: 'Михайло Коцюбинський', genre: 'Класика', year: 1911, status: 'available', coverColor: COVER_COLORS[0], coverUrl: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=600&fit=crop' },
+  { id: '2', isbn: '978-966-14-2345-6', inventoryNumber: 'INV-002', title: 'Кайдашева сім\'я', author: 'Іван Нечуй-Левицький', genre: 'Класика', year: 1879, status: 'reserved', coverColor: COVER_COLORS[1], coverUrl: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&h=600&fit=crop' },
+  { id: '3', isbn: '978-966-14-3456-7', inventoryNumber: 'INV-003', title: 'Місто', author: 'Валер\'ян Підмогильний', genre: 'Роман', year: 1928, status: 'available', coverColor: COVER_COLORS[2], coverUrl: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=600&fit=crop' },
+  { id: '4', isbn: '978-966-14-4567-8', inventoryNumber: 'INV-004', title: 'Лісова пісня', author: 'Леся Українка', genre: 'Драма', year: 1911, status: 'available', coverColor: COVER_COLORS[3], coverUrl: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=600&fit=crop' },
+  { id: '5', isbn: '978-966-14-5678-9', inventoryNumber: 'INV-005', title: 'Захар Беркут', author: 'Іван Франко', genre: 'Історичний', year: 1883, status: 'reserved', coverColor: COVER_COLORS[4], coverUrl: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=400&h=600&fit=crop' },
+  { id: '6', isbn: '978-966-14-6789-0', inventoryNumber: 'INV-006', title: 'Маруся Чурай', author: 'Ліна Костенко', genre: 'Поезія', year: 1979, status: 'available', coverColor: COVER_COLORS[5], coverUrl: 'https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=400&h=600&fit=crop' },
+  { id: '7', isbn: '978-966-14-7890-1', inventoryNumber: 'INV-007', title: 'Енеїда', author: 'Іван Котляревський', genre: 'Поема', year: 1798, status: 'available', coverColor: COVER_COLORS[6], coverUrl: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop' },
+  { id: '8', isbn: '978-966-14-8901-2', inventoryNumber: 'INV-008', title: 'Чорна рада', author: 'Пантелеймон Куліш', genre: 'Історичний', year: 1857, status: 'written-off', coverColor: COVER_COLORS[7], coverUrl: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&h=600&fit=crop' },
+  { id: '9', isbn: '978-966-14-9012-3', inventoryNumber: 'INV-009', title: 'Кобзар', author: 'Тарас Шевченко', genre: 'Поезія', year: 1840, status: 'available', coverColor: COVER_COLORS[0], coverUrl: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&h=600&fit=crop' },
+  { id: '10', isbn: '978-966-14-0123-4', inventoryNumber: 'INV-010', title: 'Тигролови', author: 'Іван Багряний', genre: 'Пригодницький', year: 1944, status: 'available', coverColor: COVER_COLORS[1], coverUrl: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=400&h=600&fit=crop' },
 ];
 
 export const mockUsers: User[] = [
