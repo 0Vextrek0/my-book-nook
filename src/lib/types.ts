@@ -20,6 +20,7 @@ export interface Book {
   year: number;
   status: BookStatus;
   coverColor: string;
+  coverUrl?: string;
 }
 
 export type BookingStatus = 'active' | 'completed' | 'cancelled';
