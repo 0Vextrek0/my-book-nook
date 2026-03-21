@@ -1,3 +1,4 @@
+/* Library context provider */
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Book, Booking } from '@/lib/types';
 import { mockBooks, mockBookings } from '@/lib/mock-data';
