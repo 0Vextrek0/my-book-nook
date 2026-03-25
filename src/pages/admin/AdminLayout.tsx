@@ -1,50 +1,72 @@
 import { useState } from 'react';
 import { Link, useLocation, Navigate, Outlet } from 'react-router-dom';
-import { LayoutDashboard, BookPlus, ClipboardList, ArrowLeft, Menu, X } from 'lucide-react';
+import {
+  LayoutDashboard,
+  BookPlus,
+  ClipboardList,
+  ArrowLeft,
+  Menu,
+  X,
+  Users,
+  ChartColumn,
+  Archive,
+  ScrollText,
+} from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
+import { Permission } from '@/lib/acl';
+import { ComponentType } from 'react';
 
-const navItems = [
-  { to: '/admin', label: 'Дашборд', icon: LayoutDashboard, end: true },
-  { to: '/admin/catalog', label: 'Управління каталогом', icon: BookPlus },
-  { to: '/admin/bookings', label: 'Бронювання', icon: ClipboardList },
+const navItems: {
+  to: string;
+  label: string;
+  icon: ComponentType<{ className?: string }>;
+  end?: boolean;
+  permission: Permission;
+}[] = [
+  { to: '/admin', label: 'Дашборд', icon: LayoutDashboard, end: true, permission: 'admin.access' },
+  { to: '/admin/catalog', label: 'Каталог', icon: BookPlus, permission: 'catalog.manage' },
+  { to: '/admin/bookings', label: 'Бронювання', icon: ClipboardList, permission: 'bookings.manage' },
+  { to: '/admin/users', label: 'Користувачі', icon: Users, permission: 'users.view' },
+  { to: '/admin/analytics', label: 'Аналітика', icon: ChartColumn, permission: 'analytics.view' },
+  { to: '/admin/writeoffs', label: 'Архів списань', icon: Archive, permission: 'users.view' },
+  { to: '/admin/logs', label: 'Логи', icon: ScrollText, permission: 'logs.view' },
 ];
 
 export default function AdminLayout() {
-  const { user } = useAuth();
+  const { user, hasUserPermission } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  if (!user || user.role !== 'librarian') {
-    return <Navigate to="/login" />;
-  }
+  if (!user) return <Navigate to="/login" replace />;
+  if (!hasUserPermission('admin.access')) return <Navigate to="/" replace />;
 
-  const isActive = (path: string, end?: boolean) =>
-    end ? location.pathname === path : location.pathname.startsWith(path);
+  const visibleNavItems = navItems.filter((item) => hasUserPermission(item.permission));
+  const isActive = (path: string, end?: boolean) => (end ? location.pathname === path : location.pathname.startsWith(path));
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
-      {/* Top bar mobile */}
       <div className="flex items-center justify-between border-b bg-card p-3 md:hidden">
-        <span className="font-display font-bold text-primary">Панель бібліотекаря</span>
-        <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <span className="font-display font-bold text-primary">Адмін-панель</span>
+        <button onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="Відкрити меню">
           {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       <div className="flex">
-        {/* Sidebar */}
-        <aside className={`
+        <aside
+          className={`
           fixed inset-y-0 left-0 z-40 w-64 border-r bg-card p-4 transition-transform md:static md:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        `}>
+        `}
+        >
           <div className="mb-8 hidden md:block">
-            <h2 className="font-display text-lg font-bold text-primary">Панель бібліотекаря</h2>
-            <p className="text-xs text-muted-foreground mt-1">{user.name}</p>
+            <h2 className="font-display text-lg font-bold text-primary">Адмін-панель</h2>
+            <p className="mt-1 text-xs text-muted-foreground">{user.name}</p>
           </div>
 
           <nav className="space-y-1">
-            {navItems.map(item => (
+            {visibleNavItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
@@ -61,7 +83,7 @@ export default function AdminLayout() {
             ))}
           </nav>
 
-          <div className="mt-8 pt-4 border-t">
+          <div className="mt-8 border-t pt-4">
             <Link to="/" onClick={() => setSidebarOpen(false)}>
               <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-muted-foreground">
                 <ArrowLeft className="h-4 w-4" />
@@ -71,13 +93,9 @@ export default function AdminLayout() {
           </div>
         </aside>
 
-        {/* Overlay */}
-        {sidebarOpen && (
-          <div className="fixed inset-0 z-30 bg-background/80 md:hidden" onClick={() => setSidebarOpen(false)} />
-        )}
+        {sidebarOpen && <div className="fixed inset-0 z-30 bg-background/80 md:hidden" onClick={() => setSidebarOpen(false)} />}
 
-        {/* Content */}
-        <main className="flex-1 min-h-screen p-4 md:p-8">
+        <main className="min-h-screen flex-1 p-4 md:p-8">
           <Outlet />
         </main>
       </div>

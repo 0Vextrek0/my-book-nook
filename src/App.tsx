@@ -15,7 +15,12 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminCatalog from "./pages/admin/AdminCatalog";
 import AdminBookings from "./pages/admin/AdminBookings";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminWriteOffArchive from "./pages/admin/AdminWriteOffArchive";
+import AdminLogs from "./pages/admin/AdminLogs";
 import NotFound from "./pages/NotFound";
+import { RequirePermission } from "./components/RequirePermission";
 
 const queryClient = new QueryClient();
 
@@ -36,8 +41,12 @@ const App = () => (
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<AdminDashboard />} />
-                <Route path="catalog" element={<AdminCatalog />} />
-                <Route path="bookings" element={<AdminBookings />} />
+                <Route path="catalog" element={<RequirePermission permission="catalog.manage"><AdminCatalog /></RequirePermission>} />
+                <Route path="bookings" element={<RequirePermission permission="bookings.manage"><AdminBookings /></RequirePermission>} />
+                <Route path="users" element={<RequirePermission permission="users.view"><AdminUsers /></RequirePermission>} />
+                <Route path="analytics" element={<RequirePermission permission="analytics.view"><AdminAnalytics /></RequirePermission>} />
+                <Route path="writeoffs" element={<RequirePermission permission="users.view"><AdminWriteOffArchive /></RequirePermission>} />
+                <Route path="logs" element={<RequirePermission permission="logs.view"><AdminLogs /></RequirePermission>} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>

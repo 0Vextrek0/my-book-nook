@@ -1,4 +1,5 @@
-import { Book, Booking, User } from './types';
+import { makeInitialSnapshot } from '@/lib/analytics-utils';
+import { AuditLog, Book, Booking, Notification, WaitlistEntry, WriteOffRecord, User } from './types';
 
 const COVER_COLORS = [
   'bg-blue-600', 'bg-emerald-600', 'bg-amber-600', 'bg-rose-600',
@@ -21,13 +22,61 @@ export const mockBooks: Book[] = [
 export const mockUsers: User[] = [
   { id: 'u1', name: 'Олена Петренко', email: 'olena@example.com', phone: '+380501234567', role: 'reader' },
   { id: 'u2', name: 'Іван Шевченко', email: 'ivan@example.com', phone: '+380671234567', role: 'reader' },
-  { id: 'admin', name: 'Бібліотекар', email: 'admin@library.com', phone: '+380991234567', role: 'librarian' },
+  { id: 'lib1', name: 'Марина Коваль', email: 'librarian@library.com', phone: '+380991234567', role: 'librarian' },
+  { id: 'adm1', name: 'Системний адміністратор', email: 'admin@library.com', phone: '+380971234567', role: 'admin' },
+  { id: 'db1', name: 'Адміністратор БД', email: 'dbadmin@library.com', phone: '+380931234567', role: 'db_admin' },
+  { id: 'sup1', name: 'Техпідтримка', email: 'support@library.com', phone: '+380661234567', role: 'support' },
 ];
 
 export const mockBookings: Booking[] = [
   { id: 'b1', userId: 'u1', bookId: '2', dateReserved: '2026-03-15', status: 'active' },
   { id: 'b2', userId: 'u2', bookId: '5', dateReserved: '2026-03-16', status: 'active' },
 ];
+
+export const mockWriteOffRecords: WriteOffRecord[] = [
+  {
+    id: 'wo-1',
+    bookId: '8',
+    bookTitle: 'Чорна рада',
+    reason: 'застарілість',
+    date: '2026-03-10',
+    notes: 'Замінено новим перевиданням.',
+    writtenOffBy: 'Марина Коваль',
+  },
+];
+
+export const mockNotifications: Notification[] = [
+  {
+    id: 'ntf-1',
+    title: 'Нове бронювання',
+    message: 'Книгу «Кайдашева сімʼя» заброньовано читачем.',
+    type: 'info',
+    createdAt: '2026-03-16T10:30:00.000Z',
+    role: 'librarian',
+    readBy: [],
+  },
+];
+
+export const mockAuditLogs: AuditLog[] = [
+  {
+    id: 'log-1',
+    action: 'book.writeoff',
+    entityType: 'writeoff',
+    entityId: 'wo-1',
+    details: 'Списано книгу «Чорна рада».',
+    createdAt: '2026-03-10T09:45:00.000Z',
+    actorId: 'lib1',
+    actorName: 'Марина Коваль',
+  },
+];
+
+export const mockWaitlist: WaitlistEntry[] = [];
+
+export const mockAnalytics = {
+  today: Array.from({ length: 8 }).map((_, idx) => makeInitialSnapshot(idx + 1)),
+  week: Array.from({ length: 14 }).map((_, idx) => makeInitialSnapshot(idx + 2)),
+  month: Array.from({ length: 20 }).map((_, idx) => makeInitialSnapshot(idx + 4)),
+};
 
 export const genres = ['Класика', 'Роман', 'Драма', 'Історичний', 'Поезія', 'Поема', 'Пригодницький', 'Фантастика', 'Детектив'];
 

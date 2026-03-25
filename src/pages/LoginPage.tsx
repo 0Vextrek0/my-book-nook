@@ -19,7 +19,11 @@ export default function LoginPage() {
       toast.error('Заповніть усі поля');
       return;
     }
-    login(email, password);
+    const ok = login(email, password);
+    if (!ok) {
+      toast.error('Користувача не знайдено. Перевірте email або зареєструйтесь.');
+      return;
+    }
     toast.success('Ви успішно увійшли!');
     navigate('/');
   };
@@ -30,28 +34,33 @@ export default function LoginPage() {
       <div className="container flex items-center justify-center py-16">
         <div className="w-full max-w-sm">
           <h1 className="text-center text-2xl font-bold">Вхід</h1>
-          <p className="mt-2 text-center text-sm text-muted-foreground">
-            Увійдіть до свого акаунту
-          </p>
+          <p className="mt-2 text-center text-sm text-muted-foreground">Увійдіть до свого акаунту</p>
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
             </div>
             <div>
               <Label htmlFor="password">Пароль</Label>
-              <Input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" />
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
             </div>
-            <Button type="submit" className="w-full font-display font-semibold">Увійти</Button>
+            <Button type="submit" className="w-full font-display font-semibold">
+              Увійти
+            </Button>
           </form>
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            Немає акаунту? <Link to="/register" className="text-primary hover:underline">Зареєструватися</Link>
+            Немає акаунту?{' '}
+            <Link to="/register" className="text-primary hover:underline">
+              Зареєструватися
+            </Link>
           </p>
           <div className="mt-4 rounded-lg border bg-muted/50 p-3 text-xs text-muted-foreground">
-            <p className="font-medium mb-1">Демо акаунти:</p>
+            <p className="mb-1 font-medium">Демо акаунти (будь-який пароль):</p>
             <p>Читач: olena@example.com</p>
-            <p>Бібліотекар: admin@library.com</p>
-            <p className="mt-1 italic">Будь-який пароль підійде</p>
+            <p>Бібліотекар: librarian@library.com</p>
+            <p>Адміністратор: admin@library.com</p>
+            <p>Адмін БД: dbadmin@library.com</p>
+            <p>Підтримка: support@library.com</p>
           </div>
         </div>
       </div>
