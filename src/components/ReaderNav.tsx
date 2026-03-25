@@ -3,6 +3,8 @@ import { BookOpen, Menu, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { hasPermission } from '@/lib/acl';
+import { NotificationCenter } from '@/components/NotificationCenter';
 
 export function ReaderNav() {
   const { user, logout } = useAuth();
@@ -16,6 +18,7 @@ export function ReaderNav() {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+  const canOpenAdmin = !!user && hasPermission(user.role, 'admin.access');
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-card/80 backdrop-blur-sm">
@@ -38,9 +41,10 @@ export function ReaderNav() {
           ))}
           {user ? (
             <div className="flex items-center gap-3">
-              {user.role === 'librarian' && (
+              <NotificationCenter />
+              {canOpenAdmin && (
                 <Link to="/admin">
-                  <Button variant="outline" size="sm">Панель бібліотекаря</Button>
+                  <Button variant="outline" size="sm">Адмін-панель</Button>
                 </Link>
               )}
               <span className="text-sm text-muted-foreground">{user.name}</span>
@@ -76,9 +80,9 @@ export function ReaderNav() {
             ))}
             {user ? (
               <>
-                {user.role === 'librarian' && (
+                {canOpenAdmin && (
                   <Link to="/admin" onClick={() => setMobileOpen(false)}>
-                    <Button variant="outline" size="sm" className="w-full">Панель бібліотекаря</Button>
+                    <Button variant="outline" size="sm" className="w-full">Адмін-панель</Button>
                   </Link>
                 )}
                 <Button variant="ghost" size="sm" onClick={() => { logout(); setMobileOpen(false); }}>Вийти ({user.name})</Button>
