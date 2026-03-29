@@ -13,6 +13,32 @@ describe('Auth context', () => {
     window.localStorage.removeItem('my-book-nook-user-id-v1');
   });
 
+  it('registers a new reader with valid data and starts session', () => {
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
+    let response;
+
+    act(() => {
+      response = result.current.register('New Reader', 'New.Reader@Example.com', '+380501111111', 'abc12345');
+    });
+
+    expect(response?.success).toBe(true);
+    expect(response?.user?.role).toBe('reader');
+    expect(response?.user?.email).toBe('new.reader@example.com');
+    expect(result.current.user?.email).toBe('new.reader@example.com');
+  });
+
+  it('rejects invalid registration data', () => {
+    const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
+    let response;
+
+    act(() => {
+      response = result.current.register('', 'bad-email', '123', 'abc12345');
+    });
+
+    expect(response?.success).toBe(false);
+    expect(response?.reason).toBe('invalid_data');
+  });
+
   it('rejects duplicate email during registration', () => {
     const { result } = renderHook(() => useAuth(), { wrapper: Wrapper });
     let response;
